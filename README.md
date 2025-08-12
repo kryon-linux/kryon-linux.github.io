@@ -2,11 +2,11 @@
 
 **The power of Arch. The ease of Debian. Built for everyone.**
 
-KryonOS is an Arch-based Linux distribution designed to combine the power and flexibility of Arch with the accessibility of beginner-friendly systems like Debian or Ubuntu. Whether you're just starting your Linux journey or you're a terminal-loving power user, KryonOS has something for you.
-
+So yeah, i was so bored that i started creating this project like a 2 years ago or so, but it turns out making linux via LFS is not the best idea.
+So i deleted all my progress just to start fresh and fork arch linux, and here i am writing this wiki.
 ---
 
-## 🌟 Features
+## 🌟 Some features:
 
 - ✅ **Beginner-friendly installer** – No more confusing Arch install scripts.
 - 🎨 **Polished desktop environment** – Comes with a lightweight, customizable UI out of the box.
@@ -52,19 +52,9 @@ _Advanced users can drop into a TTY and do it the Arch way if they prefer._
 
 ## 📦 Default Software
 
-- Desktop Environment: _[Your DE: e.g., XFCE, KDE, GNOME Lite, etc.]_
-- Browser: _[e.g., Firefox, Chromium]_
-- File Manager: _[e.g., Thunar, Dolphin]_
-- Terminal: _[e.g., Alacritty, Konsole]_
-- Software Center: _[e.g., Pamac, GNOME Software]_
-
+- Desktop Environment: We support xfce4, kde plasma, gnome and Hyprland but you can still download some manually via our installer.
+- Package Managment: I mean, Kryon uses mainly officiall repo's and AUR but ofc if you want our software center supports flatpak ass well
+- Software Center: [We are curently working on something big but for now you need to stick with kryman tool.]
 Everything else is up to you – it’s your system, your rules.
 
 ---
-
-## 🔄 Updates & Maintenance
-
-KryonOS uses Arch's rolling release model. To keep your system up-to-date:
-
-```bash
-sudo pacman -Syu

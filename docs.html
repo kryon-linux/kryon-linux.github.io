@@ -1,0 +1,297 @@
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kryon OS — Documentation</title>
+    <meta name="description" content="Official documentation for Kryon OS. Get started, learn about our tools, and troubleshoot common issues.">
+
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --panel: #1a1a1a;
+            --accent: #ff9800;
+            --muted: #9aa0a6;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glow-color: rgba(255, 152, 0, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+
+            --radius-s: 10px;
+            --radius-m: 14px;
+            --radius-l: 18px;
+            --maxw: 1140px;
+
+            --fw-sans: "Inter", "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+            
+            --space-xs: 4px;
+            --space-s: 8px;
+            --space-m: 16px;
+            --space-l: 24px;
+            --space-xl: 32px;
+            --space-xxl: 64px;
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            font-family: var(--fw-sans);
+            background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg) 40%);
+            color: #e8eef2;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.5;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        h1, h2, h3, h4, h5 { text-wrap: balance; }
+        h1, h2, h3 { letter-spacing: -0.5px; }
+        a { color: var(--accent); text-decoration: none; }
+        .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--space-l); }
+        .section-pad { padding: var(--space-xxl) 0; }
+        .muted-text { color: var(--muted); }
+        .tiny-text { font-size: 0.9rem; color: var(--muted); }
+        .grid { display: grid; gap: var(--space-l); }
+
+        /* --- Header --- */
+        header.site {
+            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 152, 0, 0.1);
+            background: rgba(10, 10, 10, 0.7);
+            padding: var(--space-m) 0;
+        }
+        .nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-l); }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo {
+            width: 48px; height: 48px; border-radius: var(--radius-s);
+            background: linear-gradient(135deg, var(--panel), #121212);
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid rgba(255, 152, 0, 0.1);
+            box-shadow: 0 4px 18px var(--shadow-color), inset 0 -6px 20px var(--shadow-color);
+            font-weight: 700; font-size: 22px; color: var(--accent);
+            user-select: none;
+        }
+        .site-title { font-weight: 700; font-size: 18px; color: #fff; }
+        nav.links { display: flex; gap: var(--space-s); align-items: center; }
+        nav.links a {
+            color: var(--muted);
+            font-weight: 600;
+            padding: var(--space-s) 14px;
+            border-radius: var(--radius-s);
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        nav.links a:hover { color: #000; background-color: var(--accent); }
+        
+        /* POPRAWKA KONTRASTU PRZYCISKU */
+        nav.links .cta-btn {
+            background: var(--accent);
+            color: #000; /* Ustawienie czarnego koloru dla maksymalnego kontrastu */
+            box-shadow: 0 6px 20px var(--glow-color);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        nav.links .cta-btn:hover {
+            background-color: #ffaf36;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* --- DOCS SPECIFIC CSS --- */
+        .docs-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--space-xxl);
+            padding-top: var(--space-xl);
+            padding-bottom: var(--space-xl);
+        }
+
+        .docs-sidebar {
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+            padding-right: var(--space-l);
+        }
+
+        .docs-sidebar a {
+            display: block;
+            padding: var(--space-s) var(--space-m);
+            border-radius: var(--radius-s);
+            color: var(--muted);
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            border-left: 2px solid transparent;
+        }
+
+        .docs-sidebar a:hover,
+        .docs-sidebar a.active {
+            color: #fff;
+            background-color: rgba(255, 152, 0, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .docs-sidebar h4 {
+            font-size: 1rem;
+            color: #fff;
+            margin: var(--space-m) 0 var(--space-s) 0;
+            padding-left: var(--space-m);
+        }
+
+        .docs-content {
+            padding-right: var(--space-m);
+        }
+
+        .docs-content h2, .docs-content h3 {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: var(--space-s);
+            margin-top: var(--space-xl);
+        }
+
+        .docs-content pre {
+            background: var(--panel);
+            padding: var(--space-m);
+            border-radius: var(--radius-s);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        /* End of DOCS CSS */
+
+        /* --- Footer --- */
+        footer.sitefoot {
+            margin-top: var(--space-xxl); padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--muted); user-select: none;
+        }
+        .foot-wrap { display: flex; justify-content: space-between; align-items: center; gap: var(--space-m); flex-wrap: wrap; }
+        .foot-links { display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center; }
+
+        /* --- Responsive --- */
+        @media (max-width: 980px) {
+            .docs-layout {
+                grid-template-columns: 1fr;
+                gap: var(--space-m);
+            }
+            .docs-sidebar {
+                position: static;
+                height: auto;
+                overflow-y: visible;
+                padding-right: 0;
+            }
+            .docs-sidebar h4 { padding-left: 0; }
+            .docs-sidebar a { border-left: none; }
+            .docs-content { padding-right: 0; }
+            nav.links { display: none; }
+            .wrap { padding: 0 var(--space-m); }
+            .foot-wrap { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site">
+        <div class="wrap nav">
+            <a href="index.html" class="brand">
+                <div class="logo" aria-hidden="true"><strong>K</strong></div>
+                <div>
+                    <div class="site-title">Kryon OS</div>
+                    <div class="tiny-text">Arch-based • Easy Start</div>
+                </div>
+            </a>
+            <nav class="links" role="navigation" aria-label="Main Menu">
+                <a href="index.html#why">Why Kryon</a>
+                <a href="index.html#demo">Demo</a>
+                <a href="index.html#compare">Compare</a>
+                <a href="docs.html">Docs</a>
+                <a class="cta-btn" href="index.html#start">Download</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap docs-layout">
+        <aside class="docs-sidebar">
+            <nav>
+                <a href="#getting-started" class="active">Getting Started</a>
+                <a href="#installation">Installation</a>
+                <a href="#post-install">Post-Installation</a>
+                <a href="#kryman">Kryman Package Manager</a>
+                <a href="#desktops">Desktop Environments</a>
+                <a href="#troubleshooting">Troubleshooting</a>
+                <a href="#contributing">Contributing</a>
+            </nav>
+        </aside>
+
+        <section class="docs-content">
+            <h1 style="margin-top: 0;">Documentation</h1>
+            <p class="muted-text">This is the official documentation for Kryon OS. Here you can find guides, tutorials, and answers to common questions to help you get the most out of your system.</p>
+
+            <h2 id="getting-started">Getting Started</h2>
+            <p>Welcome to Kryon OS! This guide will walk you through everything you need to know to get up and running.</p>
+            
+            <h3 id="installation">Installation</h3>
+            <p>Our graphical installer makes the process straightforward. Before you begin, make sure you have prepared a bootable USB drive.</p>
+            <ol>
+                <li><strong>Download the ISO:</strong> Grab the latest image from our <a href="index.html#start">homepage</a>.</li>
+                <li><strong>Create a Bootable USB:</strong> Use a tool like **balenaEtcher** or **Rufus** to write the ISO to a USB drive.</li>
+                <li><strong>Boot from USB:</strong> Restart your computer and boot from the USB drive. The installer will launch automatically.</li>
+            </ol>
+            <p>Follow the on-screen prompts to complete the installation. You will be able to choose your language, keyboard layout, time zone, and create a user account.</p>
+
+            <h3 id="post-install">Post-Installation</h3>
+            <p>After a successful installation, you're ready to start using your system. Here are a few recommended first steps:</p>
+            <ul>
+                <li>Run a system update to ensure all packages are up to date:</li>
+                <pre>sudo pacman -Syu</pre>
+                <li>Install your favorite applications using the Kryman tool.</li>
+                <pre>kryman -S firefox steam brave vscode</pre>
+            </ul>
+
+            <h2 id="kryman">Kryman Package Manager</h2>
+            <p>Kryman is our custom tool that simplifies package management. It can search and install packages from official Arch repositories, the AUR, and Flatpak, automatically choosing the best source for you.</p>
+            
+            <h3 id="basic-usage">Basic Usage</h3>
+            <p><strong>Installing a package:</strong></p>
+            <pre>kryman -S [package-name]</pre>
+            <p><strong>Searching for a package:</strong></p>
+            <pre>kryman -F [package-name]</pre>
+            <p><strong>Updating the system:</strong></p>
+            <pre>sudo pacman -Syu</pre>
+
+            <h2 id="desktops">Desktop Environments</h2>
+            <p>Kryon OS is designed to be flexible. While our default image comes with a installer that lets you chose the prefered desktop. You still have the freedom to install any other desktop environment you prefer.</p>
+            <p>To install a new desktop with our preinstalled theme you could see in photo gallery in installer, simply use Kryman. For example, to install GNOME:</p>
+            <pre>sudo kryman -S gnome --md</pre>
+
+            <p>"--md" forces kryman to use our modified version of package.</p><h2 id="troubleshooting">Troubleshooting</h2>
+            <p>Encountering an issue? Here are some common solutions:</p>
+            <ul>
+                <li>If you have a broken package, try re-installing it from the source </li>
+                <li>For driver issues, consult the Arch Wiki's section on graphics drivers.</li>
+            </ul>
+
+            <h2 id="contributing">Contributing</h2>
+            <p>Kryon OS is a community project! We welcome contributions from everyone. You can help by:</p>
+            <ul>
+                <li>Reporting bugs and suggesting features on our <a href="https://github.com/kryon-linux/kryon-linux.github.io">GitHub</a>.</li>
+                <li>Improving our documentation (you can start here!).</li>
+                <li>Joining our <a href="#">Discord server</a> to help new users.</li>
+            </ul>
+
+        </section>
+    </main>
+
+    <footer class="sitefoot">
+        <div class="wrap foot-wrap">
+            <div>
+                © <strong>Kryon OS</strong> 2025 — Built with passion
+            </div>
+            <div class="foot-links">
+                <a href="#">Documentation</a>
+                <a href="#">License</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+    </footer>
+    
+
+</body></html>

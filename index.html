@@ -1,0 +1,596 @@
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kryon OS — Lightweight. Accessible. Powerful.</title>
+<meta name="description" content="Kryon OS — An Arch-based distribution designed for users switching from Windows / Ubuntu and for power-users. Fast, beautiful, painless.">
+
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --panel: #1a1a1a;
+    --accent: #ff9800;
+    --muted: #9aa0a6;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --glow-color: rgba(255, 152, 0, 0.15);
+    --shadow-color: rgba(0, 0, 0, 0.4);
+
+    --radius-s: 10px;
+    --radius-m: 14px;
+    --radius-l: 18px;
+    --maxw: 1140px;
+
+    --fw-sans: "Inter", "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+    
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-m: 16px;
+    --space-l: 24px;
+    --space-xl: 32px;
+    --space-xxl: 64px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--fw-sans);
+    background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg) 40%);
+    color: #e8eef2;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  h1, h2, h3, h4, h5 { text-wrap: balance; }
+  h1, h2, h3 { letter-spacing: -0.5px; }
+  a { color: var(--accent); text-decoration: none; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--space-l); }
+  .section-pad { padding: var(--space-xxl) 0; }
+  .muted-text { color: var(--muted); }
+  .tiny-text { font-size: 0.9rem; color: var(--muted); }
+  .grid { display: grid; gap: var(--space-l); }
+
+  /* --- Header --- */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 152, 0, 0.1);
+    background: rgba(10, 10, 10, 0.7);
+    padding: var(--space-m) 0;
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-l); }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo {
+    width: 48px; height: 48px; border-radius: var(--radius-s);
+    background: linear-gradient(135deg, var(--panel), #121212);
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(255, 152, 0, 0.1);
+    box-shadow: 0 4px 18px var(--shadow-color), inset 0 -6px 20px var(--shadow-color);
+    font-weight: 700; font-size: 22px; color: var(--accent);
+    user-select: none;
+  }
+  .site-title { font-weight: 700; font-size: 18px; color: #fff; }
+  nav.links { display: flex; gap: var(--space-s); align-items: center; }
+  nav.links a {
+    color: var(--muted);
+    font-weight: 600;
+    padding: var(--space-s) 14px;
+    border-radius: var(--radius-s);
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+  nav.links a:hover { color: #000; background-color: var(--accent); }
+  
+  /* POPRAWKA KONTRASTU PRZYCISKU */
+  nav.links .cta-btn {
+    background: var(--accent);
+    color: #000; /* Ustawienie czarnego koloru dla maksymalnego kontrastu */
+    box-shadow: 0 6px 20px var(--glow-color);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  nav.links .cta-btn:hover {
+    background-color: #ffaf36;
+    color: #000;
+    transform: translateY(-2px);
+  }
+
+  /* --- Hero --- */
+  .hero {
+    padding: var(--space-xxl) 0;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: var(--space-xxl);
+    align-items: center;
+  }
+  .hero-left h1 {
+    margin: var(--space-m) 0;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.1;
+  }
+  .eyebrow {
+    display: inline-block; padding: 6px 12px;
+    border-radius: 999px; background: var(--panel);
+    color: var(--accent); font-weight: 700; font-size: 0.9rem;
+    border: 1px solid var(--border-color); user-select: none;
+  }
+  .lead { color: #cbd5da; margin-bottom: var(--space-l); font-size: 1.1rem; max-width: 58ch; }
+  .hero-ctas { display: flex; gap: var(--space-m); flex-wrap: wrap; }
+  .ghost-btn {
+    background: transparent; border: 1px solid var(--border-color);
+    padding: 10px 18px; border-radius: var(--radius-s); color: var(--muted);
+    font-weight: 700;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+  .ghost-btn:hover { background-color: var(--accent); color: #000; border-color: var(--accent); }
+  .card {
+    background: var(--glass); border-radius: var(--radius-m); padding: var(--space-l);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 12px 40px var(--shadow-color);
+    backdrop-filter: blur(12px);
+  }
+  .hero-right .stat { display: flex; gap: var(--space-m); align-items: center; }
+  .hero-right .stat:not(:last-child) { margin-bottom: var(--space-l); }
+  .ico {
+    flex-shrink: 0; width: 52px; height: 52px; border-radius: var(--radius-s);
+    background: var(--panel); display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-color); font-size: 28px; user-select: none;
+  }
+  .stat h3 { margin: 0 0 4px 0; font-size: 1rem; color: #fff; }
+  .stat p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+  /* --- Features --- */
+  .section-header { text-align: center; max-width: 65ch; margin: 0 auto var(--space-xl); }
+  .section-header h2 { font-size: clamp(28px, 4vw, 36px); margin: 0 0 var(--space-s); }
+  .features-grid { grid-template-columns: repeat(3, 1fr); }
+  .feature {
+    background: linear-gradient(var(--panel), #111);
+    border-radius: var(--radius-m); padding: var(--space-l);
+    border: 1px solid var(--border-color);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    overflow: hidden; user-select: none; position: relative;
+  }
+  .feature::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: var(--radius-m);
+    border: 2px solid transparent;
+    background: radial-gradient(circle at var(--x, 50%) var(--y, 100%), var(--accent), transparent 40%) border-box;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    opacity: 0; transition: opacity 0.4s ease;
+  }
+  .feature:hover {
+    transform: translateY(-8px);
+    border-color: rgba(255, 152, 0, 0.3);
+    box-shadow: 0 20px 50px var(--glow-color);
+  }
+  .feature:hover::before { opacity: 0.5; }
+  .feature .feature-icon { font-size: 28px; margin-bottom: var(--space-s); }
+  .feature h4 { margin: 0 0 var(--space-s); color: var(--accent); }
+  .feature p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+  /* --- Video --- */
+  .video-wrap {
+    border-radius: var(--radius-m); overflow: hidden;
+    border: 1px solid var(--border-color); background: #000;
+    padding: var(--space-m);
+  }
+  .video-placeholder {
+    width: 100%; aspect-ratio: 16 / 9;
+    background: linear-gradient(90deg, rgba(255, 152, 0, 0.05), rgba(255, 152, 0, 0.02));
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-weight: 700; border-radius: var(--radius-s);
+    user-select: none;
+  }
+
+  /* --- Comparison Table --- */
+  table { width: 100%; border-collapse: separate; border-spacing: 10px 10px; }
+  th { color: var(--muted); text-align: left; padding: var(--space-s) var(--space-m); font-weight: 700; }
+  td {
+    background: var(--panel); padding: var(--space-m); border-radius: var(--radius-s);
+    border: 1px solid var(--border-color); color: #dfe8eb;
+  }
+  td:first-child { font-weight: 600; color: #fff; }
+
+  /* --- Get Started --- */
+  .start-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+  .start-step {
+    display: flex; flex-direction: column;
+    background: var(--glass); padding: var(--space-l); border-radius: var(--radius-m);
+    border: 1px solid var(--border-color); user-select: none;
+  }
+  .start-step h3 { margin: var(--space-m) 0 var(--space-s); }
+  .step-num {
+    background: rgba(255, 255, 255, 0.05); padding: 6px 14px;
+    border-radius: 999px; display: inline-block; color: var(--accent);
+    font-weight: 800; user-select: none; align-self: flex-start;
+  }
+  .start-step .cta-group { margin-top: auto; padding-top: var(--space-m); display: flex; flex-wrap: wrap; gap: var(--space-s); }
+
+  /* --- Testimonials & FAQ --- */
+  .dual-grid { display: grid; grid-template-columns: 1fr 420px; gap: var(--space-xl); align-items: start; }
+  .testi { display: flex; gap: var(--space-m); align-items: center; }
+  .avatar {
+    width: 56px; height: 56px; flex-shrink: 0;
+    border-radius: var(--radius-s); background: linear-gradient(180deg, #181818, #111);
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border-color); font-weight: 700; font-size: 20px;
+    color: var(--accent); user-select: none;
+  }
+  .t-name { font-weight: 700; color: #fff; }
+  .faq-item {
+    background: var(--glass); border-radius: var(--radius-s);
+    border: 1px solid var(--border-color);
+  }
+  .faq-item:not(:last-child) { margin-bottom: var(--space-s); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; padding: var(--space-m);
+  }
+  .faq-q h5 { margin: 0; color: var(--accent); font-size: 1rem; }
+  .faq-icon {
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    color: var(--muted);
+  }
+  .faq-item.is-open .faq-icon { transform: rotate(45deg); }
+  
+  /* POPRAWKA CSS DLA FAQ */
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease-out;
+  }
+  .faq-a p {
+    margin: 0;
+    padding: 0 var(--space-m) var(--space-m) var(--space-m);
+    color: var(--muted);
+  }
+  
+  /* --- Footer --- */
+  footer.sitefoot {
+    margin-top: var(--space-xxl); padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border-color);
+    color: var(--muted); user-select: none;
+  }
+  .foot-wrap { display: flex; justify-content: space-between; align-items: center; gap: var(--space-m); flex-wrap: wrap; }
+  .foot-links { display: flex; gap: var(--space-m); flex-wrap: wrap; align-items: center; }
+
+  /* --- Responsive --- */
+  @media (max-width: 1024px) {
+    .dual-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 980px) {
+    .hero { grid-template-columns: 1fr; gap: var(--space-xl); text-align: center; }
+    .hero-left { display: flex; flex-direction: column; align-items: center; }
+    .hero-ctas { justify-content: center; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .start-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .features-grid { grid-template-columns: 1fr; }
+    nav.links { display: none; }
+    .wrap { padding: 0 var(--space-m); }
+    .foot-wrap { flex-direction: column; text-align: center; }
+  }
+
+  /* --- Animations --- */
+  .fadein {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fade-in 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+  }
+  @keyframes fade-in {
+    to { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site">
+    <div class="wrap nav">
+      <a href="#" class="brand">
+        <div class="logo" aria-hidden="true"><strong>K</strong></div>
+        <div>
+          <div class="site-title">Kryon OS</div>
+          <div class="tiny-text">Arch-based • Easy Start</div>
+        </div>
+      </a>
+      <nav class="links" role="navigation" aria-label="Main Menu">
+        <a href="#why">Why Kryon</a>
+        <a href="#demo">Demo</a>
+        <a href="#compare">Compare</a>
+        <a href="docs.html">Docs</a>
+        <a class="cta-btn" href="#start">Download</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-left fadein fadein-visible">
+        <span class="eyebrow">Open Beta</span>
+        <h1>Kryon OS — Arch that isn't afraid to be easy.</h1>
+        <p class="lead">Don't be discouraged, our system is also ideal for serious nerds and their advanced tasks—unlike a certain distro that sounds a lot like "Manjaro."</p>
+        <div class="hero-ctas">
+          <a href="#download" class="ghost-btn">⬇ Download ISO</a>
+          <a class="ghost-btn" href="#demo">▶ Watch Demo</a>
+        </div>
+        <p class="tiny-text" style="margin-top: var(--space-m);">Switching from Windows or Ubuntu? We won’t ask you to update again before you can even boot.</p>
+      </div>
+
+      <aside class="hero-right fadein fadein-visible" style="animation-delay: 0.2s;">
+        <div class="card">
+          <div class="stat">
+            <div class="ico" aria-hidden="true">⚡</div>
+            <div><h3>Optimized</h3><p>Small footprint, fast boot times, and low RAM usage.</p></div>
+          </div>
+          <div class="stat">
+            <div class="ico" aria-hidden="true">🧭</div>
+            <div><h3>Easy Start</h3><p>A friendly installer and automatic setup for your convenience.</p></div>
+          </div>
+          <div class="stat">
+            <div class="ico" aria-hidden="true">⚙️</div>
+            <div><h3>Full Control</h3><p>Access to Pacman + AUR, fully customizable for power-users.</p></div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="why" class="section-pad">
+      <div class="section-header fadein fadein-visible">
+        <h2>What else?</h2>
+        <p class="muted-text">You're not seriously gonna tell me you’re into this ancient Manjaro with its 5-year-old dinosaur kernel that somehow “magically” gets security updates every second — aka just endless bloated junk installs to sell your data straight to Alibaba’s evil overlords?</p>
+      </div>
+      <div class="grid features-grid">
+        <div class="feature fadein fadein-visible" style="animation-delay: 0.1s; --x: 277px; --y: 4.79998779296875px;">
+          <div class="feature-icon">🚀</div>
+          <h4>Performance First</h4>
+          <p>Configured for low resource consumption—perfect for new and old devices alike.</p>
+        </div>
+        <div class="feature fadein fadein-visible" style="animation-delay: 0.2s; --x: 4px; --y: 162.8000030517578px;">
+          <div class="feature-icon">🖥️</div>
+          <h4>Friendly Installer</h4>
+          <p>Our graphical installer guides you through the process step-by-step. No terminal, no stress.</p>
+        </div>
+        <div class="feature fadein fadein-visible" style="animation-delay: 0.3s; --x: 54px; --y: 93.79998779296875px;">
+          <div class="feature-icon">🛡️</div>
+          <h4>Secure &amp; Fresh</h4>
+          <p>Enjoy the latest packages thanks to a rolling-release model and our secure default settings.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="demo" class="section-pad">
+      <div class="section-header fadein fadein-visible">
+        <h2>See It In Action</h2>
+        <p class="muted-text">A quick preview of the interface and system performance. See how simple and beautiful Arch Linux can be.</p>
+      </div>
+      <div class="video-wrap fadein fadein-visible">
+        <div class="video-placeholder">Embedded video &lt;iframe&gt; or &lt;video&gt; tag goes here</div>
+      </div>
+      <p class="tiny-text" style="text-align: center; margin-top: var(--space-s);">Pro tip: A short video (40-90s) showing the installer and desktop works wonders.</p>
+    </section>
+
+    <section id="compare" class="section-pad">
+      <div class="section-header fadein fadein-visible">
+        <h2>How Do We Compare?</h2>
+      </div>
+      <div style="overflow-x: auto;" class="fadein fadein-visible">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Feature</th>
+              <th>Kryon OS</th>
+              <th>Ubuntu Desktop</th>
+              <th>Windows 11</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>GUI</td>
+              <td>Antything u want [more in docs]</td>
+              <td>GNOME (Heavier)</td>
+              <td>Windows Shell</td>
+            </tr>
+            <tr>
+              <td>Performance (Older Hardware)</td>
+              <td>⭐️⭐️⭐️⭐️⭐️</td>
+              <td>⭐️⭐️⭐️</td>
+              <td>⭐️</td>
+            </tr>
+            <tr>
+              <td>Software Availability</td>
+              <td>Official Repos + AUR +
+kryman* + flatpak</td>
+              <td>APT + Snap Store</td>
+              <td>Microsoft Store + .exe</td>
+            </tr>
+             <tr>
+              <td>Privacy (by default)</td>
+              <td>Maximum, no telemetry</td>
+              <td>Telemetry enabled</td>
+              <td>Extensive telemetry</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          Kryman is our own tool which basiclly search up for packages in Officiall Repos AUR and Flatpak and automaticlly downloads the best option if available.
+        </p>
+      </div>
+    </section><section class="section-pad" id="compare-to-manjaro">
+      <div class="section-header fadein fadein-visible">
+        <h2>Kryon / Manjaro?</h2>
+        <p>You seriously want to compare those two systems? Well then take this:</p>
+      </div>
+      <div style="overflow-x: auto;" class="fadein fadein-visible">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 30%;">Feature</th>
+              <th>Kryon OS</th>
+              <th>Manjaro</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Rolling Release</td>
+              <td>Rolling means you get the latest and greatest — carefully tested, fast, and reliable.</td>
+              <td>Rolling means gambling with your system every boot — will your “stable” update finally blow up that ancient 5-year-old kernel? It’s like playing Russian roulette with Linux! Spoiler: the jackpot is a crash, and Manjaro’s the dealer, dealing you broken packages as freebies.</td>
+              
+            </tr>
+            
+            
+             
+          </tbody>
+        </table>
+        
+      </div>
+    </section>
+    
+    <section id="start" class="section-pad">
+        <div class="section-header fadein fadein-visible">
+            <h2>Get Started in 3 Easy Steps</h2>
+        </div>
+        <div class="grid start-grid">
+            <div class="start-step fadein fadein-visible" style="animation-delay: 0.1s;">
+                <div class="step-num">1</div>
+                <h3>Download the ISO</h3>
+                <p class="tiny-text">Download the system image and create a bootable USB drive using a tool like Rufus or balenaEtcher.</p>
+            </div>
+            <div class="start-step fadein fadein-visible" style="animation-delay: 0.2s;">
+                <div class="step-num">2</div>
+                <h3>Run the Installer</h3>
+                <p class="tiny-text">Boot your computer from the USB drive. Our graphical installer will guide you through the process.</p>
+            </div>
+            <div class="start-step fadein fadein-visible" style="animation-delay: 0.3s;">
+                <div class="step-num">3</div>
+                <h3>Enjoy Your System</h3>
+                <p class="tiny-text">That's it! You have a fast, modern, Arch-based system ready to go. Time to have fun!</p>
+            </div>
+            <div class="start-step fadein fadein-visible" id="download" style="animation-delay: 0.4s; background: var(--panel);">
+                <h3>Download Kryon OS</h3>
+                <p class="tiny-text">Ready? Grab the latest stable release.</p>
+                <p><strong>kryon-2025.08.iso</strong> (1.4 GB)</p>
+                <div class="cta-group">
+                    <a href="#" class="ghost-btn">⬇ Download ISO</a>
+                    <a class="ghost-btn" href="docs.html">Documentation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-pad dual-grid fadein fadein-visible">
+      <div>
+        <h2 style="margin-bottom: var(--space-l);">Frequently Asked Questions</h2>
+        
+
+        <div style="margin-top: var(--space-xl);">
+            <div class="faq-item">
+                <div class="faq-q" aria-expanded="false">
+                    <h5>Is the installation difficult?</h5>
+                    <div class="faq-icon">✚</div>
+                </div>
+                <div class="faq-a" style=""><p>Not at all! We've created a graphical installer that's as simple as Ubuntu's or Windows'. An expert mode is also available for advanced users.</p></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" aria-expanded="false">
+                    <h5>Will my Windows programs work?</h5>
+                    <div class="faq-icon">✚</div>
+                </div>
+                <div class="faq-a"><p>Many Windows applications and games work perfectly thanks to tools like Wine and Proton (built into Steam). It's always a good idea to check compatibility on sites like ProtonDB.</p></div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-q" aria-expanded="false">
+                    <h5>Where can I find help?</h5>
+                    <div class="faq-icon">✚</div>
+                </div>
+                <div class="faq-a"><p>Our community on Discord and our forums are very active. You can find the links in the footer. We also invite you to check out our public documentation.</p></div>
+            </div>
+        </div>
+      </div>
+      <aside>
+        <div class="card">
+            <h3>Join the Community</h3>
+            <p class="muted-text">Have questions or ideas? Join us on Discord, GitHub, and the forums. Together, we're building a better system!</p>
+            <div style="margin-top: var(--space-m); display: flex; flex-wrap: wrap; gap: var(--space-s);">
+                <a class="ghost-btn" href="#">Discord</a>
+                <a class="ghost-btn" href="#">GitHub</a>
+                <a class="ghost-btn" href="#">Forum</a>
+            </div>
+        </div>
+        <div class="card" style="margin-top: var(--space-l);">
+            <h4 style="margin:0 0 8px">Build Info</h4>
+            <div class="muted-text">kryon-2025.08 • Arch Base 2025.08.01 • Kernel 6.9</div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="sitefoot">
+    <div class="wrap foot-wrap">
+      <div>
+        © <strong>Kryon OS</strong> 2025 — Built with passion
+      </div>
+      <div class="foot-links">
+        <a href="#" class="ghost-btn">Documentation</a>
+        <a href="#" class="ghost-btn">License</a>
+        <a href="#" class="ghost-btn">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // --- POPRAWIONY SKRYPT FAQ ---
+  const faqItems = document.querySelectorAll('.faq-item');
+  faqItems.forEach(item => {
+    const question = item.querySelector('.faq-q');
+    const answer = item.querySelector('.faq-a');
+    
+    question.addEventListener('click', () => {
+      // Toggle the 'is-open' class on the parent item
+      const isOpen = item.classList.toggle('is-open');
+      
+      // Update ARIA attribute for accessibility
+      question.setAttribute('aria-expanded', isOpen);
+      
+      // Set max-height to trigger the CSS transition
+      if (isOpen) {
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+      } else {
+        answer.style.maxHeight = null;
+      }
+    });
+  });
+
+  // --- Progressive Reveal on Scroll ---
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('fadein-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+  document.querySelectorAll('.fadein').forEach(el => observer.observe(el));
+  
+  // --- Premium hover effect for features ---
+  const features = document.querySelectorAll('.feature');
+  features.forEach(feature => {
+    feature.addEventListener('mousemove', e => {
+      const rect = feature.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      feature.style.setProperty('--x', `${x}px`);
+      feature.style.setProperty('--y', `${y}px`);
+    });
+  });
+});
+</script>
+
+</body></html>
